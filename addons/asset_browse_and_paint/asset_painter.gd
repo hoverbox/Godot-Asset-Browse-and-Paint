@@ -1227,14 +1227,20 @@ func _set_multimesh_transforms(node: MultiMeshInstance3D, transforms: Array[Tran
 	PainterMultiMesh.set_transforms(node, transforms)
 
 func _capture_multimesh_snapshot() -> Array:
+	if placement_parent == null or not is_instance_valid(placement_parent):
+		return []
 	return PainterMultiMesh.capture_snapshot(placement_parent)
 
-func _apply_multimesh_snapshot(parent: Node3D, snapshot: Array) -> void:
+func _apply_multimesh_snapshot(parent, snapshot: Array) -> void:
+	if parent == null or not is_instance_valid(parent):
+		return
 	PainterMultiMesh.apply_snapshot(parent, snapshot)
 	_spacing_hash_dirty = true
 
 func _commit_multimesh_stroke(action_name: String = "Paint MultiMesh Assets") -> void:
-	if not _multimesh_stroke_active or placement_parent == null:
+	if not _multimesh_stroke_active or placement_parent == null or not is_instance_valid(placement_parent):
+		_multimesh_stroke_active = false
+		_multimesh_before_snapshot.clear()
 		return
 	_multimesh_stroke_active = false
 	var before: Array = _multimesh_before_snapshot.duplicate(true)
@@ -1494,18 +1500,25 @@ func _erase_near(position: Vector3) -> void:
 func _commit_stroke() -> void:
 	if _stroke_nodes.is_empty() or placement_parent == null:
 		return
+	# The nodes are already in their final scene-tree state. Detaching them here and
+	# re-adding them only to execute the UndoRedo "do" step leaves instanced
+	# Node3D children outside the tree temporarily. Some scenes query their global
+	# transforms during that transition, and saved owners are invalid while their
+	# ancestor is detached. Register the existing state and commit without executing
+	# the do methods instead.
 	var nodes: Array[Node] = _stroke_nodes.duplicate()
-	for node in nodes:
-		if is_instance_valid(node) and node.get_parent() != null:
-			node.get_parent().remove_child(node)
+	var edited_root: Node = EditorInterface.get_edited_scene_root()
 	var ur: EditorUndoRedoManager = plugin.get_undo_redo()
 	ur.create_action("Paint %d Assets" % nodes.size())
 	for node in nodes:
-		ur.add_do_method(placement_parent, "add_child", node)
-		ur.add_do_method(node, "set_owner", EditorInterface.get_edited_scene_root())
+		if not is_instance_valid(node) or node.get_parent() != placement_parent:
+			continue
+		ur.add_do_method(placement_parent, "add_child", node, true)
+		if edited_root != null and (edited_root == placement_parent or edited_root.is_ancestor_of(placement_parent)):
+			ur.add_do_method(node, "set_owner", edited_root)
 		ur.add_undo_method(placement_parent, "remove_child", node)
 		ur.add_do_reference(node)
-	ur.commit_action()
+	ur.commit_action(false)
 	_stroke_nodes.clear()
 
 func _spacing_hash_key(position: Vector3) -> Vector3i:

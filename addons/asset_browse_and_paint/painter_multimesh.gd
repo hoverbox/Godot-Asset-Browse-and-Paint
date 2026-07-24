@@ -136,11 +136,12 @@ static func erase_near(parent: Node3D, position: Vector3, radius: float) -> bool
 			changed = true
 	return changed
 
-static func capture_snapshot(parent: Node3D) -> Array:
+static func capture_snapshot(parent) -> Array:
 	var snapshot: Array = []
-	if parent == null or not is_instance_valid(parent):
+	if parent == null or not is_instance_valid(parent) or not parent is Node3D:
 		return snapshot
-	for child in parent.get_children():
+	var parent_3d := parent as Node3D
+	for child in parent_3d.get_children():
 		if not child is MultiMeshInstance3D or not child.has_meta("asset_painter_multimesh"):
 			continue
 		var node := child as MultiMeshInstance3D
@@ -160,12 +161,13 @@ static func capture_snapshot(parent: Node3D) -> Array:
 		})
 	return snapshot
 
-static func apply_snapshot(parent: Node3D, snapshot: Array) -> void:
-	if parent == null or not is_instance_valid(parent):
+static func apply_snapshot(parent, snapshot: Array) -> void:
+	if parent == null or not is_instance_valid(parent) or not parent is Node3D:
 		return
-	for child in parent.get_children():
+	var parent_3d := parent as Node3D
+	for child in parent_3d.get_children():
 		if child is MultiMeshInstance3D and child.has_meta("asset_painter_multimesh"):
-			parent.remove_child(child)
+			parent_3d.remove_child(child)
 			child.free()
 	for entry_value in snapshot:
 		var entry: Dictionary = entry_value as Dictionary
@@ -187,7 +189,7 @@ static func apply_snapshot(parent: Node3D, snapshot: Array) -> void:
 		if not grid_layer.is_empty():
 			node.set_meta("asset_painter_grid_layer", grid_layer)
 			node.set_meta("asset_painter_grid_cells", (entry.get("grid_cells", []) as Array).duplicate())
-		parent.add_child(node, true)
+		parent_3d.add_child(node, true)
 		node.owner = EditorInterface.get_edited_scene_root()
 		var transforms: Array[Transform3D] = []
 		for transform_value in entry.get("transforms", []):
