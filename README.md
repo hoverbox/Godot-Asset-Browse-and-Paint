@@ -2,7 +2,7 @@
 ### A Fast, Professional Asset Painting & Placement Tool for Godot 4
 
 <p align="center">
-  <img src="docs/images/preview.png" alt="Asset Browse & Paint" width="900">
+  <img src="screenshots/preview.png" alt="Asset Browse & Paint" width="900">
 </p>
 
 <p align="center">
