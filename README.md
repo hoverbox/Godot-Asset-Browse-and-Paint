@@ -1,376 +1,537 @@
-# \# Asset Browser
+# Asset Browser
+### A Fast, Professional Asset Painting & Placement Tool for Godot 4
 
-# 
+<p align="center">
+  <img src="docs/images/preview.png" alt="Asset Browse & Paint" width="900">
+</p>
 
-# Create beautiful game environments directly inside Godot.
+<p align="center">
 
-# 
+![Godot](https://img.shields.io/badge/Godot-4.x-blue.svg)
+![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Platform](https://img.shields.io/badge/Platform-Editor-orange.svg)
 
-# Asset Browser combines a Blender-style asset browser with a professional environment painting system. Browse `.tscn` assets, paint them directly onto surfaces, scatter props, create forests, draw paths, and build entire environments without ever leaving the editor.
+</p>
 
-# 
+---
 
-# !\[Asset Browser](screenshots/preview.png)
+## Overview
 
-# 
+Asset Browser is a powerful editor plugin for Godot 4 that makes building levels dramatically faster.
 
-# \---
+Instead of manually dragging scenes into your level one at a time, Asset Browser lets you browse your libraries, organize assets into folders and collections, and paint objects directly into your scene with professional placement tools.
 
-# 
+Whether you're building forests, cities, dungeons, interiors, or open worlds, Asset Browser provides an efficient workflow while remaining simple enough for beginners.
 
-# \## Features
+---
 
-# 
+# Features
 
-# \### Asset Browser
+## Asset Library
 
-# 
+- Multiple asset folders
+- Unlimited assets
+- Thumbnail previews
+- Fast searching
+- Asset filtering
+- Folder organization
+- Collections
+- Favorites
+- Multi-selection
 
-# \- Browse folders of `.tscn` assets
+---
 
-# \- Thumbnail previews
+## Painting Tools
 
-# \- Search assets instantly
+Paint assets directly into your scene using your mouse.
 
-# \- Favorites
+Supports:
 
-# \- Recently used assets
+- Free Paint
+- Grid Paint
+- Surface Paint
+- Random Asset Selection
+- Random Rotation
+- Random Scale
+- Random Yaw
+- Random Pitch
+- Random Roll
+- Random Offset
 
-# \- Custom collections
+---
 
-# \- Adjustable thumbnail sizes
+## Placement Tools
 
-# \- Drag-and-drop placement
+Quickly place assets using several placement modes.
 
-# \- Persistent browser settings
+- Surface Placement
+- Grid Placement
+- Free Placement
+- Snap to Surface
+- Align to Surface Normal
+- Manual Placement
 
-# 
+---
 
-# \### Environment Painting
+## Brush Controls
 
-# 
+Customize exactly how assets are painted.
 
-# \- Paint Brush
+- Brush Radius
+- Brush Density
+- Brush Spacing
+- Random Rotation
+- Random Scale
+- Random Height Offset
+- Collision Checking
+- Overlap Prevention
 
-# \- Erase Brush
+---
 
-# \- Reapply Brush
+## MultiMesh Support
 
-# \- Rectangle Scatter
+Paint thousands of objects efficiently using MultiMesh.
 
-# \- Lasso Scatter
+Perfect for:
 
-# \- Fill Mesh
+- Grass
+- Rocks
+- Small Decorations
+- Foliage
+- Ground Clutter
 
-# \- Surface Path Brush
+---
 
-# 
+## Collections
 
-# \### Brush Controls
+Organize frequently used assets.
 
-# 
+Examples:
 
-# \- Radius
+```
+Nature
+    Trees
+    Bushes
+    Rocks
 
-# \- Count
+Buildings
+    Houses
+    Walls
+    Props
 
-# \- Density
+Sci-Fi
+    Doors
+    Consoles
+    Pipes
+```
 
-# \- Spacing
+Collections make switching between groups of assets instant.
 
-# \- Rotation
+---
 
-# \- Scale
+## Search
 
-# \- Alignment
+Find assets instantly.
 
-# \- Surface Offset
+Search by:
 
-# \- Surface Filters
+- Name
+- Folder
+- Collection
 
-# 
+---
 
-# \### Scatter
+## Undo / Redo
 
-# 
+Every placement operation supports:
 
-# \- Uniform Random
+- Undo
+- Redo
 
-# \- Blue Noise
+allowing safe experimentation while building levels.
 
-# \- Clustered
+---
 
-# \- Center Bias
+# Installation
 
-# \- Edge Bias
+## Install from GitHub
 
-# \- Brush Falloff
+1. Download the repository.
+2. Copy the `addons/asset_browser` folder into your project.
+3. Open **Project → Project Settings → Plugins**
+4. Enable **Asset Browser**.
 
-# \- Random Seed
+The dock will now appear inside the editor.
 
-# \- Weighted Variants
+---
 
-# 
+# Quick Start
 
-# \### Surface Painting
+## 1. Add Asset Folders
 
-# 
+Click the **Folder** button.
 
-# \- Paint directly onto meshes
+Choose one or more folders that contain scenes.
 
-# \- Surface alignment
+Example:
 
-# \- Keep upright mode
+```
+res://Assets/
+res://Environment/
+res://Props/
+```
 
-# \- Blend alignment
+The Asset Browser will scan these folders automatically.
 
-# \- Custom up axis
+---
 
-# 
+## 2. Select an Asset
 
-# \### MultiMesh
+Click any asset in the library.
 
-# 
+A preview will appear.
 
-# \- Paint directly into MultiMeshes
+You can also select multiple assets for random painting.
 
-# \- Automatic mesh extraction
+---
 
-# \- Chunked MultiMeshes
+## 3. Choose a Paint Mode
 
-# \- Visibility ranges
+Select one of the available paint modes.
 
-# \- Spatial hash optimization
+### Surface
 
-# 
+Paint directly onto existing geometry.
 
-# \### Ecosystems
+Best for:
 
-# 
+- Rocks
+- Trees
+- Decorations
 
-# Create reusable ecosystem brushes with weighted asset placement.
+---
 
-# 
+### Grid
 
-# Perfect for:
+Paint aligned to a fixed grid.
 
-# 
+Best for:
 
-# \- Forests
+- Modular buildings
+- Walls
+- Floors
+- Tile-based worlds
 
-# \- Rocks
+---
 
-# \- Flowers
+### Free
 
-# \- Grass
+Place assets without snapping.
 
-# \- Bushes
+Best for:
 
-# \- Debris
+- Manual positioning
+- Fine adjustments
 
-# 
+---
 
-# \### Surface Path Brush
+## 4. Paint
 
-# 
+Move the mouse into the 3D viewport.
 
-# Draw editable paths directly onto geometry.
+Click to place assets.
 
-# 
+Hold and drag to paint continuously.
 
-# Supports:
+---
 
-# 
+# Interface
 
-# \- Single Line
+## Library
 
-# \- Double Line
+Displays every discovered asset.
 
-# \- Corridor
+Supports:
 
-# \- Rows
+- Search
+- Filtering
+- Multi-selection
 
-# 
+---
 
-# \### Area Tools
+## Folder List
 
-# 
+Displays every registered asset folder.
 
-# \- Rectangle Scatter
+Selecting a folder filters the asset list.
 
-# \- Lasso Scatter
+The **All Folders** entry displays every asset.
 
-# \- Fill Selected Mesh
+---
 
-# \- Scatter Inside Area3D
+## Collections
 
-# \- Clear Area3D
+Collections are custom groups of assets.
 
-# 
+Right-click assets to add them to collections.
 
-# \### Brush Presets
+---
 
-# 
+## Preview
 
-# Save and load complete brush configurations including:
+Shows the currently selected asset.
 
-# 
+---
 
-# \- Assets
+## Inspector
 
-# \- Scatter settings
+Displays brush settings and placement options.
 
-# \- Filters
+---
 
-# \- Rotation
+# Brush Settings
 
-# \- Scale
+## Radius
 
-# \- Ecosystem settings
+Controls the size of the paint brush.
 
-# 
+---
 
-# \### Statistics
+## Density
 
-# 
+Controls how many assets are placed during each stroke.
 
-# Live editor statistics include:
+Higher values produce denser placement.
 
-# 
+---
 
-# \- Scene Instances
+## Grid Size
 
-# \- MultiMeshes
+Controls spacing while Grid mode is active.
 
-# \- Draw Calls
+---
 
-# \- Triangle Count
+## Rotation Randomization
 
-# \- Optimization Rating
+Randomly rotates each placed asset.
 
-# 
+Useful for natural variation.
 
-# \---
+---
 
-# 
+## Scale Randomization
 
-# \## Installation
+Randomly scales each asset.
 
-# 
+Perfect for vegetation.
 
-# \### Via the Godot Asset Library (recommended)
+---
 
-# 
+## Height Offset
 
-# 1\. Open your project in Godot.
+Offsets placed assets vertically.
 
-# 2\. Open the \*\*AssetLib\*\* tab.
+Useful for preventing clipping.
 
-# 3\. Search for \*\*Asset Browser\*\*.
+---
 
-# 4\. Download the plugin.
+# Multi-Selection
 
-# 5\. Enable it under \*\*Project → Project Settings → Plugins\*\*.
+Select multiple assets.
 
-# 
+The painter will randomly choose one during placement.
 
-# \### Manual
+Great for:
 
-# 
+- Rocks
+- Trees
+- Crates
+- Plants
 
-# 1\. Download or clone this repository.
+This creates natural variation automatically.
 
-# 2\. Copy:
+---
 
-# 
+# Collections
 
-# ```
+Create collections to organize commonly used assets.
 
-# addons/asset\_browser/
+Example:
 
-# ```
+```
+Forest
 
-# 
+Trees
+Bushes
+Logs
+Flowers
+Rocks
+```
 
-# into your project's `addons` folder.
+Switch collections with one click.
 
-# 
+---
 
-# 3\. Enable the plugin.
+# Best Practices
 
-# 
+### Keep Similar Assets Together
 
-# \---
+Organize assets into folders such as:
 
-# 
+```
+Environment
+Props
+Buildings
+Nature
+Characters
+```
 
-# \## Quick Start
+---
 
-# 
+### Use Collections
 
-# 1\. Open the \*\*Assets\*\* dock.
+Collections are ideal for:
 
-# 2\. Select your asset folder.
+- Dungeon kits
+- Forest kits
+- Village kits
+- Sci-Fi kits
 
-# 3\. Select one or more assets.
+---
 
-# 4\. Click \*\*Paint Assets\*\*.
+### Use Grid Mode
 
-# 5\. Click \*\*Use Selected Parent\*\*.
+Grid mode is ideal for:
 
-# 6\. Select a parent node.
+- Walls
+- Floors
+- Buildings
+- Modular pieces
 
-# 7\. Paint directly onto your scene.
+---
 
-# 
+### Use Surface Mode
 
-# \---
+Surface mode works best for:
 
-# 
+- Rocks
+- Grass
+- Trees
+- Decorations
 
-# \## Hotkeys
+---
 
-# 
+### Randomization
 
-# | Shortcut | Action |
+Adding slight random:
 
-# |----------|--------|
+- Rotation
+- Scale
+- Height
 
-# | `\[` `]` | Brush Size |
+creates much more natural-looking environments.
 
-# | `Shift + \[` `]` | Density |
+---
 
-# | `Ctrl + \[` `]` | Count |
+# Keyboard & Mouse
 
-# | `Alt + \[` `]` | Spacing |
+| Action | Description |
+|---------|-------------|
+| Left Click | Place asset |
+| Click + Drag | Paint continuously |
+| Ctrl+Z | Undo |
+| Ctrl+Shift+Z | Redo |
 
-# | `Shift + Paint` | Temporary Erase |
+---
 
-# | `Ctrl + Paint` | Precise Placement |
+# Tips
 
-# | `Esc` | Exit Painter |
+- Use folders to organize large libraries.
+- Create collections for frequently used assets.
+- Multi-select similar assets for natural variation.
+- Use Grid mode for modular environments.
+- Use Surface mode for organic scenes.
+- Use random rotation and scale for realistic placement.
 
-# 
+---
 
-# \---
+# Troubleshooting
 
-# 
+## Assets do not appear
 
-# \## Requirements
+- Verify the asset folder has been added.
+- Ensure the folder contains valid scenes.
+- Refresh the library if necessary.
 
-# 
+---
 
-# \- Godot 4.7+
+## Cannot paint
 
-# 
+Verify:
 
-# \---
+- An asset is selected.
+- A paint mode is active.
+- A valid surface exists under the cursor.
 
-# 
+---
 
-# \## License
+## Grid painting is not aligned
 
-# 
+Check:
 
-# MIT License — see \[LICENSE](LICENSE) for details.
+- Grid mode is enabled.
+- Grid size is appropriate for your assets.
 
+---
+
+## Undo behaves unexpectedly
+
+Undo only affects placement operations performed through Asset Browser.
+
+---
+
+# Performance Tips
+
+For large environments:
+
+- Use MultiMesh where appropriate.
+- Group similar assets.
+- Keep randomization reasonable.
+- Organize libraries into multiple folders.
+
+---
+
+# Contributing
+
+Contributions are welcome.
+
+Please open an Issue or Pull Request with:
+
+- Bug reports
+- Feature requests
+- Improvements
+- Documentation updates
+
+---
+
+# License
+
+This project is released under the MIT License.
+
+---
+
+# Support
+
+If you encounter a bug or have a feature request, please open an issue on GitHub.
+
+If you enjoy the plugin, consider starring the repository to support future development.
+
+---
+
+<p align="center">
+
+**Happy Building!**
+
+Made with ❤️ for the Godot Community.
+
+</p>
