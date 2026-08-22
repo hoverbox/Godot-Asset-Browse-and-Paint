@@ -67,7 +67,16 @@ func _render(scene_path: String, receiver: Object, callback: String) -> void:
 		return
 
 	var instance: Node = packed.instantiate()
+	_strip_competing_environment_nodes(instance)
 	_viewport.add_child(instance)
+
+	# Some scenes (e.g. pack "Demo"/"Overview" showcase scenes) carry their
+	# own WorldEnvironment/Camera3D. Godot does not automatically hand
+	# "current" status back to our own camera/environment once a competing
+	# one is freed, so every thumbnail rendered afterward — for the rest
+	# of the editor session — would otherwise fall back to a flat grey
+	# default background. Re-assert ours unconditionally on every render.
+	_camera.current = true
 
 	await RenderingServer.frame_post_draw
 
@@ -110,6 +119,18 @@ func _finish(receiver: Object, callback: String, scene_path: String, tex: Textur
 	if is_instance_valid(receiver):
 		receiver.call_deferred(callback, scene_path, tex)
 	_process_next()
+
+
+func _strip_competing_environment_nodes(node: Node) -> void:
+	# Remove any WorldEnvironment/Camera3D found inside a loaded scene before
+	# it enters our shared viewport, so pack showcase scenes (Demo/Overview,
+	# which bundle their own lighting + camera) can never steal "current"
+	# status from the addon's own persistent environment/camera.
+	for child in node.get_children():
+		_strip_competing_environment_nodes(child)
+	if node is WorldEnvironment or node is Camera3D:
+		node.get_parent().remove_child(node)
+		node.queue_free()
 
 
 func _get_global_aabb(node: Node) -> AABB:
