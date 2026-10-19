@@ -105,6 +105,3 @@ func _forward_3d_gui_input(viewport_camera: Camera3D, event: InputEvent) -> int:
 		if _asset_painter.handle_viewport_input(viewport_camera, event):
 			return EditorPlugin.AFTER_GUI_INPUT_STOP
 	return EditorPlugin.AFTER_GUI_INPUT_PASS
-
-func _handles(_object: Object) -> bool:
-	return true
